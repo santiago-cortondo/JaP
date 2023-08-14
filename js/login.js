@@ -1,14 +1,14 @@
-document.getElementById("login").addEventListener("click", () => {
-    const mail = document.getElementById("inputEmail").value;
-    const pass = document.getElementById("inputPassword").value;
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("login").addEventListener("click", () => {
+        const mail = document.getElementById("inputEmail").value;
+        const pass = document.getElementById("inputPassword").value;
 
-    alert("1")
-    if(mail && pass) {
-        alert("2")
-        try {
-            localStorage.setItem("user",JSON.stringify({'mail':mail, 'pass':pass}));
-        } catch(e) {
+        if (mail.length > 0 && pass.length > 0) {
+            try {
+                localStorage.setItem("user", JSON.stringify({ 'mail': mail, 'pass': pass }));
+            } catch (e) {
+            }
+            location.href = "./index.html";
         }
-        window.location = "./index.html";
-    }
+    });
 });
