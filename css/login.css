@@ -1,8 +1,13 @@
 body {
-    background-color: rgb(248, 249, 250);
+    background-color: #caf0e2;
+}
+
+h1 {
+    margin-top: 60px;
 }
 
 #login {
-    background-color: orangered;
+    background-color: #F09100;
+    color: white;
     border: none;
 }
