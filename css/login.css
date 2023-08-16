@@ -11,3 +11,13 @@ h1 {
     color: white;
     border: none;
 }
+
+.half_or_full {
+    width: 50%;
+}
+
+@media only screen and (max-width: 600px) {
+    .half_or_full {
+        width: 100%;
+    }
+}
