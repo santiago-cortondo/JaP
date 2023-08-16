@@ -2,10 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("login").addEventListener("click", e => {
         //e.preventDefault();
 
-        const rember = document.getElementById("inputCheck").checked;
-
         const mail = document.getElementById("inputEmail").value;
         const pass = document.getElementById("inputPassword").value;
+        const rember = document.getElementById("inputCheck").checked;
 
         const session = {
             'mail': mail,
