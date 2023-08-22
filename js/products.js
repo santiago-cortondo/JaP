@@ -1,6 +1,8 @@
-let URL_InfoAutos = "https://japceibal.github.io/emercado-api/cats_products/101.json";
+let numero =localStorage.getItem("catID");
 
-  
+let URL_InfoAutos = `https://japceibal.github.io/emercado-api/cats_products/${numero}.json`;
+
+
 fetch(URL_InfoAutos)
 .then(res => res.json())
 .then(res => {
