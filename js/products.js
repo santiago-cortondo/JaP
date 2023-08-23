@@ -32,8 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const s = document.getElementById("search");
     s.value = "";
     s.addEventListener("input", () => {
-        const val = s.value.toLowerCase();
-        let fil = array.filter(e => e.name.toLowerCase().includes(val) || e.description.toLowerCase().includes(val));
+        const val = clean(s.value);
+        let fil = array.filter(e => clean(e.name).includes(val) || clean(e.description).includes(val));
         MostrarData(fil);
     });
 });
+
+function clean(s) {//https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
+    return s.normalize('NFKD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+}
