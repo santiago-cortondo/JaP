@@ -12,7 +12,7 @@ fetch(URL_InfoAutos)
 let productos = document.getElementById("productos");
 
 function MostrarData(dataArray) {
-    productos.innerHTML += "";
+    productos.innerHTML = "";
     for (const item of dataArray) {
         productos.innerHTML += `
         <div class="cuadrante">
@@ -30,15 +30,10 @@ function MostrarData(dataArray) {
 
 document.addEventListener("DOMContentLoaded", () => {
     const s = document.getElementById("search");
+    s.value = "";
     s.addEventListener("input", () => {
-        const val = s.value;
-        let fil = array.filter(e => e.name.includes(val) || e.description.includes(val))
+        const val = s.value.toLowerCase();
+        let fil = array.filter(e => e.name.toLowerCase().includes(val) || e.description.toLowerCase().includes(val));
         MostrarData(fil);
     });
 });
-
-/*
-
-que filtre en tiempo real (el evento input te será de ayuda) según el texto que se ingresa en dicho campo.
-Incluye en la búsqueda el texto en el título y en la descripción de los artículos.
-*/
