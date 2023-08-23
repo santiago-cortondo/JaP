@@ -6,7 +6,7 @@ fetch(URL_InfoAutos)
     .then(res => res.json())
     .then(res => {
         array = res.products;
-        MostrarData(res.products)
+        MostrarData(array)
     })
 
 let productos = document.getElementById("productos");
