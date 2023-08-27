@@ -302,3 +302,9 @@ p.parrafo-autos {
   height: 100%;
   
 }
+
+#menu > input {
+  width: 70%;
+  height: auto;
+  margin-left: 10px;
+}
