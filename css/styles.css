@@ -308,3 +308,15 @@ p.parrafo-autos {
   height: auto;
   margin-left: 10px;
 }
+
+.Tamaño{
+  width: 25%;
+  height: 20%;
+  margin-right: 10px;
+}
+
+.Filtroprecio{
+  display: flex; 
+  align-items: center;
+
+}
