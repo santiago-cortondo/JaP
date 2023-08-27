@@ -63,7 +63,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const precioMin = parseFloat(document.getElementById("precioMin").value);
       const precioMax = parseFloat(document.getElementById("precioMax").value);
 
-      if (!isNaN(precioMin) || !isNaN(precioMax)) {
+      if (!isNaN(precioMin) && !isNaN(precioMax)) {
+        const productosFiltradosPorPrecio = array.filter(producto => {
+            return producto.cost >= precioMin && producto.cost <= precioMax;
+        });
+
+        MostrarData(productosFiltradosPorPrecio);
+    }else if (!isNaN(precioMin) || !isNaN(precioMax)) {
           const productosFiltradosPorPrecio = array.filter(producto => {
               return producto.cost >= precioMin || producto.cost <= precioMax;
           });
