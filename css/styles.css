@@ -244,14 +244,11 @@ p.parrafo-autos {
   font-size: 24px;
   max-height: 50px;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
   margin-bottom: 5px;
 }
 
 #productos .descripcion {
-  overflow: hidden;
-  text-overflow: ellipsis;
   margin-top: 10px;
   flex-grow: 1;
 }
@@ -312,3 +309,4 @@ p.parrafo-autos {
   height: 100%;
   
 }
+
