@@ -58,6 +58,30 @@ let FiltroDescente = document.getElementById("ordenarDescendente");
     
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("aplicarFiltroPrecio").addEventListener("click", function(){
+      const precioMin = parseFloat(document.getElementById("precioMin").value);
+      const precioMax = parseFloat(document.getElementById("precioMax").value);
+
+      if (!isNaN(precioMin) || !isNaN(precioMax)) {
+          const productosFiltradosPorPrecio = array.filter(producto => {
+              return producto.cost >= precioMin || producto.cost <= precioMax;
+          });
+
+          MostrarData(productosFiltradosPorPrecio);
+      }
+  });
+
+  document.getElementById("limpiarFiltroPrecio").addEventListener("click", function(){
+      document.getElementById("precioMin").value = "";
+      document.getElementById("precioMax").value = "";
+
+      MostrarData(array);
+  });
+ 
+});
+
+
 function clean(filtrador) {//https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
     return filtrador.normalize('NFKD').replace(/\p{Diacritic}/gu, '').toLowerCase();
 }
