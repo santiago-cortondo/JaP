@@ -55,6 +55,45 @@ document.addEventListener("DOMContentLoaded", () => {
     
 });
 
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("aplicarFiltroPrecio").addEventListener("click", function(){
+        const precioMin = parseFloat(document.getElementById("precioMin").value);
+        const precioMax = parseFloat(document.getElementById("precioMax").value);
+
+        if (!isNaN(precioMin) || !isNaN(precioMax)) {
+            const productosFiltradosPorPrecio = array.filter(producto => {
+                return producto.cost >= precioMin && producto.cost <= precioMax;
+            });
+
+            MostrarData(productosFiltradosPorPrecio);
+        }
+    });
+
+    document.getElementById("limpiarFiltroPrecio").addEventListener("click", function(){
+        // Limpia los campos de rango de precio
+        document.getElementById("precioMin").value = "";
+        document.getElementById("precioMax").value = "";
+
+        // Muestra todos los productos nuevamente
+        MostrarData(array);
+    });
+
+    const s = document.getElementById("search");
+    s.value = "";
+    s.addEventListener("input", () => {
+        const val = clean(s.value);
+        let fil = array.filter(e => clean(e.name).includes(val) || clean(e.description).includes(val));
+        MostrarData(fil);
+    });
+});
+  const s = document.getElementById("search");
+  s.value = "";
+  s.addEventListener("input", () => {
+      const val = clean(s.value);
+      let fil = array.filter(e => clean(e.name).includes(val) || clean(e.description).includes(val));
+      MostrarData(fil);
+  });
+
 function clean(s) {//https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
     return s.normalize('NFKD').replace(/\p{Diacritic}/gu, '').toLowerCase();
 }

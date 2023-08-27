@@ -2,8 +2,9 @@
 .card-body,
 .container,
 .site-header {
-  font-family: 'Verdana', serif !important;
+    font-family: 'Oswald', sans-serif sans-serif !important;  
 }
+
 
 .jumbotron .display-4 {
   font-weight: bold;
@@ -312,3 +313,4 @@ p.parrafo-autos {
   height: 100%;
   
 }
+
