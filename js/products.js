@@ -1,20 +1,35 @@
-let numero =localStorage.getItem("catID");
+let numero = localStorage.getItem("catID");
 
 let URL_InfoAutos = `https://japceibal.github.io/emercado-api/cats_products/${numero}.json`;
+
+let arrayOriginal = [];
+let filtroBusqueda = null;
+let filtroPrecio = null;
+let orden = null;
 
 fetch(URL_InfoAutos)
     .then(res => res.json())
     .then(res => {
-        array = res.products;
-        MostrarData(array)
+        arrayOriginal = res.products;
+        MostrarData(arrayOriginal);
     })
 
 let productos = document.getElementById("productos");
 
+function recalcular() {
+    let arr = arrayOriginal;
+    if(filtroPrecio)
+        arr = arr.filter(filtroPrecio);
+    if(filtroBusqueda)
+        arr = arr.filter(filtroBusqueda);
+    arr.sort(orden);
+    MostrarData(arr);
+}
+
 function MostrarData(dataArray) {
     productos.innerHTML = "";
     for (const item of dataArray) {
-      productos.innerHTML += `
+        productos.innerHTML += `
         <div class="cuadrante">
           <img src="${item.image}">
           <div class="contenido">
@@ -26,65 +41,69 @@ function MostrarData(dataArray) {
           </div>
         </div>`;
     }
-  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
 
-   let filtroAscendente = document.getElementById("ordenarAscendente");
-   filtroAscendente.addEventListener("click", function(){
-    array.sort((a, b) => a.cost - b.cost);
-    MostrarData(array);
-});
-   
-let FiltroDescente = document.getElementById("ordenarDescendente");
-    FiltroDescente.addEventListener("click", function(){
-        array.sort((a, b) => b.cost - a.cost);
-        MostrarData(array);
+    document.getElementById("precioMin").value = "";
+    document.getElementById("precioMax").value = "";
+
+    let filtroAscendente = document.getElementById("ordenarAscendente");
+    filtroAscendente.addEventListener("click", function () {
+        orden = (a, b) => a.cost - b.cost;
+        recalcular();
     });
 
- let FiltroVendidos =   document.getElementById("ordenarRelevancia");
-    FiltroVendidos.addEventListener("click", function(){
-        array.sort((a, b) => b.soldCount - a.soldCount);
-        MostrarData(array);
+    let FiltroDescente = document.getElementById("ordenarDescendente");
+    FiltroDescente.addEventListener("click", function () {
+        orden = (a, b) => b.cost - a.cost;
+        recalcular();
     });
 
-    const Buscador = document.getElementById("search");
-    Buscador.value = "";
-    Buscador.addEventListener("input", () => {
-        const val = clean(Buscador.value);
-        let fil = array.filter(Filtrado => clean(Filtrado.name).includes(val) || clean(Filtrado.description).includes(val));
-        MostrarData(fil);
+    let FiltroVendidos = document.getElementById("ordenarRelevancia");
+    FiltroVendidos.addEventListener("click", function () {
+        orden = (a, b) => b.soldCount - a.soldCount;
+        recalcular();
     });
-    
-});
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("aplicarFiltroPrecio").addEventListener("click", function(){
-      const precioMin = parseFloat(document.getElementById("precioMin").value);
-      const precioMax = parseFloat(document.getElementById("precioMax").value);
+    const busqueda = document.getElementById("search");
+    busqueda.value = "";
+    busqueda.addEventListener("input", () => {
+        const querry = clean(busqueda.value);
+        if(querry.length>0)
+            filtroBusqueda = elem => clean(elem.name).includes(querry) || clean(elem.description).includes(querry)
+        else
+            filtroBusqueda = null;
+        recalcular();
+    });
 
-      if (!isNaN(precioMin) && !isNaN(precioMax)) {
-        const productosFiltradosPorPrecio = array.filter(producto => {
-            return producto.cost >= precioMin && producto.cost <= precioMax;
-        });
+    document.getElementById("aplicarFiltroPrecio").addEventListener("click", function () {
+        const precioMin = parseFloat(document.getElementById("precioMin").value);
+        const precioMax = parseFloat(document.getElementById("precioMax").value);
 
-        MostrarData(productosFiltradosPorPrecio);
-    }else if (!isNaN(precioMin) || !isNaN(precioMax)) {
-          const productosFiltradosPorPrecio = array.filter(producto => {
-              return producto.cost >= precioMin || producto.cost <= precioMax;
-          });
+        if (!isNaN(precioMin) && !isNaN(precioMax)) {
+            filtroPrecio = producto => {
+                return producto.cost >= precioMin && producto.cost <= precioMax;
+            };
+        } else if (!isNaN(precioMin) || !isNaN(precioMax)) {
+            filtroPrecio = producto => {
+                return producto.cost >= precioMin || producto.cost <= precioMax;
+            };
+        } else {
+            filtroPrecio = null;
+        }
 
-          MostrarData(productosFiltradosPorPrecio);
-      }
-  });
+        recalcular();
+    });
 
-  document.getElementById("limpiarFiltroPrecio").addEventListener("click", function(){
-      document.getElementById("precioMin").value = "";
-      document.getElementById("precioMax").value = "";
+    document.getElementById("limpiarFiltroPrecio").addEventListener("click", function () {
+        document.getElementById("precioMin").value = "";
+        document.getElementById("precioMax").value = "";
 
-      MostrarData(array);
-  });
- 
+        filtroPrecio = null;
+        recalcular();
+    });
+
 });
 
 
