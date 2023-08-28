@@ -320,3 +320,11 @@ p.parrafo-autos {
   align-items: center;
 
 }
+
+
+.jumbotron,
+.card-body,
+.container,
+.site-header {
+    font-family: 'Oswald',sans-serif !important;
+}
