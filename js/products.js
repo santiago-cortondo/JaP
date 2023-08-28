@@ -30,70 +30,64 @@ function MostrarData(dataArray) {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    document.getElementById("ordenarAscendente").addEventListener("click", function(){
-        array.sort((a, b) => a.cost - b.cost);
-        MostrarData(array);
-    });
-
-    document.getElementById("ordenarDescendente").addEventListener("click", function(){
+   let filtroAscendente = document.getElementById("ordenarAscendente");
+   filtroAscendente.addEventListener("click", function(){
+    array.sort((a, b) => a.cost - b.cost);
+    MostrarData(array);
+});
+   
+let FiltroDescente = document.getElementById("ordenarDescendente");
+    FiltroDescente.addEventListener("click", function(){
         array.sort((a, b) => b.cost - a.cost);
         MostrarData(array);
     });
 
-    document.getElementById("ordenarRelevancia").addEventListener("click", function(){
+ let FiltroVendidos =   document.getElementById("ordenarRelevancia");
+    FiltroVendidos.addEventListener("click", function(){
         array.sort((a, b) => b.soldCount - a.soldCount);
         MostrarData(array);
     });
 
-    const s = document.getElementById("search");
-    s.value = "";
-    s.addEventListener("input", () => {
-        const val = clean(s.value);
-        let fil = array.filter(e => clean(e.name).includes(val) || clean(e.description).includes(val));
+    const Buscador = document.getElementById("search");
+    Buscador.value = "";
+    Buscador.addEventListener("input", () => {
+        const val = clean(Buscador.value);
+        let fil = array.filter(Filtrado => clean(Filtrado.name).includes(val) || clean(Filtrado.description).includes(val));
         MostrarData(fil);
     });
     
 });
 
-  document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("aplicarFiltroPrecio").addEventListener("click", function(){
-        const precioMin = parseFloat(document.getElementById("precioMin").value);
-        const precioMax = parseFloat(document.getElementById("precioMax").value);
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("aplicarFiltroPrecio").addEventListener("click", function(){
+      const precioMin = parseFloat(document.getElementById("precioMin").value);
+      const precioMax = parseFloat(document.getElementById("precioMax").value);
 
-        if (!isNaN(precioMin) || !isNaN(precioMax)) {
-            const productosFiltradosPorPrecio = array.filter(producto => {
-                return producto.cost >= precioMin && producto.cost <= precioMax;
-            });
+      if (!isNaN(precioMin) && !isNaN(precioMax)) {
+        const productosFiltradosPorPrecio = array.filter(producto => {
+            return producto.cost >= precioMin && producto.cost <= precioMax;
+        });
 
-            MostrarData(productosFiltradosPorPrecio);
-        }
-    });
+        MostrarData(productosFiltradosPorPrecio);
+    }else if (!isNaN(precioMin) || !isNaN(precioMax)) {
+          const productosFiltradosPorPrecio = array.filter(producto => {
+              return producto.cost >= precioMin || producto.cost <= precioMax;
+          });
 
-    document.getElementById("limpiarFiltroPrecio").addEventListener("click", function(){
-        // Limpia los campos de rango de precio
-        document.getElementById("precioMin").value = "";
-        document.getElementById("precioMax").value = "";
-
-        // Muestra todos los productos nuevamente
-        MostrarData(array);
-    });
-
-    const s = document.getElementById("search");
-    s.value = "";
-    s.addEventListener("input", () => {
-        const val = clean(s.value);
-        let fil = array.filter(e => clean(e.name).includes(val) || clean(e.description).includes(val));
-        MostrarData(fil);
-    });
-});
-  const s = document.getElementById("search");
-  s.value = "";
-  s.addEventListener("input", () => {
-      const val = clean(s.value);
-      let fil = array.filter(e => clean(e.name).includes(val) || clean(e.description).includes(val));
-      MostrarData(fil);
+          MostrarData(productosFiltradosPorPrecio);
+      }
   });
 
-function clean(s) {//https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
-    return s.normalize('NFKD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+  document.getElementById("limpiarFiltroPrecio").addEventListener("click", function(){
+      document.getElementById("precioMin").value = "";
+      document.getElementById("precioMax").value = "";
+
+      MostrarData(array);
+  });
+ 
+});
+
+
+function clean(filtrador) {//https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
+    return filtrador.normalize('NFKD').replace(/\p{Diacritic}/gu, '').toLowerCase();
 }
