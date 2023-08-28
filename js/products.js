@@ -3,6 +3,7 @@ let numero = localStorage.getItem("catID");
 let URL_InfoAutos = `https://japceibal.github.io/emercado-api/cats_products/${numero}.json`;
 
 let arrayOriginal = [];
+
 let filtroBusqueda = null;
 let filtroPrecio = null;
 let orden = null;
@@ -12,19 +13,20 @@ fetch(URL_InfoAutos)
     .then(res => {
         arrayOriginal = res.products;
         MostrarData(arrayOriginal);
-    })
-
-let productos = document.getElementById("productos");
+    });
 
 function recalcular() {
     let arr = arrayOriginal;
-    if(filtroPrecio)
+    if (filtroPrecio)
         arr = arr.filter(filtroPrecio);
-    if(filtroBusqueda)
+    if (filtroBusqueda)
         arr = arr.filter(filtroBusqueda);
-    arr.sort(orden);
+    if (orden)
+        arr.sort(orden);
     MostrarData(arr);
 }
+
+let productos = document.getElementById("productos");
 
 function MostrarData(dataArray) {
     productos.innerHTML = "";
@@ -45,32 +47,32 @@ function MostrarData(dataArray) {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    document.getElementById("precioMin").value = "";
-    document.getElementById("precioMax").value = "";
+    const busqueda = document.getElementById("search");
+    const precioMin = document.getElementById("precioMin");
+    const precioMax = document.getElementById("precioMax");
 
-    let filtroAscendente = document.getElementById("ordenarAscendente");
-    filtroAscendente.addEventListener("click", function () {
+    busqueda.value = "";
+    precioMin.value = "";
+    precioMax.value = "";
+
+    document.getElementById("ordenarAscendente").addEventListener("click", function () {
         orden = (a, b) => a.cost - b.cost;
         recalcular();
     });
 
-    let FiltroDescente = document.getElementById("ordenarDescendente");
-    FiltroDescente.addEventListener("click", function () {
+    document.getElementById("ordenarDescendente").addEventListener("click", function () {
         orden = (a, b) => b.cost - a.cost;
         recalcular();
     });
 
-    let FiltroVendidos = document.getElementById("ordenarRelevancia");
-    FiltroVendidos.addEventListener("click", function () {
+    document.getElementById("ordenarRelevancia").addEventListener("click", function () {
         orden = (a, b) => b.soldCount - a.soldCount;
         recalcular();
     });
 
-    const busqueda = document.getElementById("search");
-    busqueda.value = "";
     busqueda.addEventListener("input", () => {
         const querry = clean(busqueda.value);
-        if(querry.length>0)
+        if (querry.length > 0)
             filtroBusqueda = elem => clean(elem.name).includes(querry) || clean(elem.description).includes(querry)
         else
             filtroBusqueda = null;
@@ -78,17 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("aplicarFiltroPrecio").addEventListener("click", function () {
-        const precioMin = parseFloat(document.getElementById("precioMin").value);
-        const precioMax = parseFloat(document.getElementById("precioMax").value);
+        const min = parseFloat(precioMin.value);
+        const max = parseFloat(precioMax.value);
 
-        if (!isNaN(precioMin) && !isNaN(precioMax)) {
-            filtroPrecio = producto => {
-                return producto.cost >= precioMin && producto.cost <= precioMax;
-            };
-        } else if (!isNaN(precioMin) || !isNaN(precioMax)) {
-            filtroPrecio = producto => {
-                return producto.cost >= precioMin || producto.cost <= precioMax;
-            };
+        if (!isNaN(min) && !isNaN(max)) {
+            filtroPrecio = producto => producto.cost >= min && producto.cost <= max;
+        } else if (!isNaN(min) || !isNaN(max)) {
+            filtroPrecio = producto => producto.cost >= min || producto.cost <= max;
         } else {
             filtroPrecio = null;
         }
@@ -97,15 +95,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("limpiarFiltroPrecio").addEventListener("click", function () {
-        document.getElementById("precioMin").value = "";
-        document.getElementById("precioMax").value = "";
+        precioMin.value = "";
+        precioMax.value = "";
 
         filtroPrecio = null;
         recalcular();
     });
 
 });
-
 
 function clean(filtrador) {//https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
     return filtrador.normalize('NFKD').replace(/\p{Diacritic}/gu, '').toLowerCase();
