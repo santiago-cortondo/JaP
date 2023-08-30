@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
         filtroPrecio = null;
         recalcular();
     });
-// evento para que se visualice título correspondiente según id de la categoría
+    // evento para que se visualice título correspondiente según id de la categoría
     let nombre;
     const categorias = {
         "101": "Autos",
@@ -122,11 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     nombre = categorias[catID] || "Categoría Desconocida";
-  
+
     document.getElementById("tituloProducto").innerHTML = nombre
     document.getElementById("tituloProducto2").innerHTML = nombre
-  
-  })
+
+});
 
 function clean(arg) {
     //https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
