@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     precioMin.addEventListener("input", CambioPrecio);
     precioMax.addEventListener("input", CambioPrecio);
-    document.getElementById("aplicarFiltroPrecio").addEventListener("click", CambioPrecio);
+    //document.getElementById("aplicarFiltroPrecio").addEventListener("click", CambioPrecio);
 
     document.getElementById("limpiarFiltroPrecio").addEventListener("click", () => {
         precioMin.value = "";
