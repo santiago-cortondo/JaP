@@ -1,6 +1,6 @@
-let numero = localStorage.getItem("catID");
+let catID = localStorage.getItem("catID");
 
-let URL_InfoAutos = `https://japceibal.github.io/emercado-api/cats_products/${numero}.json`;
+let URL_InfoAutos = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
 
 let arrayOriginal = [];
 
@@ -107,8 +107,26 @@ document.addEventListener("DOMContentLoaded", () => {
         filtroPrecio = null;
         recalcular();
     });
+// evento para que se visualice título correspondiente según id de la categoría
+    let nombre;
+    const categorias = {
+        "101": "Autos",
+        "102": "Juguetes",
+        "103": "Muebles",
+        "104": "Herramientas",
+        "105": "Computadoras",
+        "106": "Vestimenta",
+        "107": "Electrodomésticos",
+        "108": "Deporte",
+        "109": "Celulares"
+    };
 
-});
+    nombre = categorias[catID] || "Categoría Desconocida";
+  
+    document.getElementById("tituloProducto").innerHTML = nombre
+    document.getElementById("tituloProducto2").innerHTML = nombre
+  
+  })
 
 function clean(arg) {
     //https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
