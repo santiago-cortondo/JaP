@@ -1,6 +1,6 @@
 let catID = localStorage.getItem("catID");
 
-let URL_InfoAutos = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
+let URL_Productos = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
 
 let arrayOriginal = [];
 
@@ -8,7 +8,7 @@ let filtroBusqueda = null;
 let filtroPrecio = null;
 let orden = null;
 
-fetch(URL_InfoAutos)
+fetch(URL_Productos)
     .then(res => res.json())
     .then(res => {
         arrayOriginal = res.products;
@@ -107,7 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
         filtroPrecio = null;
         recalcular();
     });
-    // evento para que se visualice título correspondiente según id de la categoría
+
+    // para que se visualice título correspondiente según id de la categoría:
     let nombre;
     const categorias = {
         "101": "Autos",
