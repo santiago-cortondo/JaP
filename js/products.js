@@ -26,7 +26,7 @@ function recalcular() {
     MostrarData(arr);
 }
 
-let productos = document.getElementById("productos");
+const productos = document.getElementById("productos");
 
 function MostrarData(dataArray) {
     productos.innerHTML = "";
