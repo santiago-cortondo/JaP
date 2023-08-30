@@ -45,7 +45,7 @@ function MostrarData(dataArray) {
     }
 }
 
-function TBD() {
+function CambioPrecio() {
     const min = parseFloat(precioMin.value);
     const max = parseFloat(precioMax.value);
 
@@ -94,11 +94,11 @@ document.addEventListener("DOMContentLoaded", () => {
         recalcular();
     });
 
-    precioMin.addEventListener("input", TBD);
-    precioMax.addEventListener("input", TBD);
-    //document.getElementById("aplicarFiltroPrecio").addEventListener("click", TBD);
+    precioMin.addEventListener("input", CambioPrecio);
+    precioMax.addEventListener("input", CambioPrecio);
+    document.getElementById("aplicarFiltroPrecio").addEventListener("click", CambioPrecio);
 
-    document.getElementById("limpiarFiltroPrecio").addEventListener("click", function () {
+    document.getElementById("limpiarFiltroPrecio").addEventListener("click", () => {
         precioMin.value = "";
         precioMax.value = "";
         busqueda.value = "";
@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-function clean(filtrador) {//https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
-    return filtrador.normalize('NFKD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+function clean(arg) {
+    //https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
+    return arg.normalize('NFKD').replace(/\p{Diacritic}/gu, '').toLowerCase();
 }
