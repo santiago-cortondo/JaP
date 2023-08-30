@@ -45,6 +45,21 @@ function MostrarData(dataArray) {
     }
 }
 
+function TBD() {
+    const min = parseFloat(precioMin.value);
+    const max = parseFloat(precioMax.value);
+
+    if (!isNaN(min) && !isNaN(max)) {
+        filtroPrecio = producto => producto.cost >= min && producto.cost <= max;
+    } else if (!isNaN(min) || !isNaN(max)) {
+        filtroPrecio = producto => producto.cost >= min || producto.cost <= max;
+    } else {
+        filtroPrecio = null;
+    }
+
+    recalcular();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const busqueda = document.getElementById("search");
@@ -79,25 +94,16 @@ document.addEventListener("DOMContentLoaded", () => {
         recalcular();
     });
 
-    document.getElementById("aplicarFiltroPrecio").addEventListener("click", function () {
-        const min = parseFloat(precioMin.value);
-        const max = parseFloat(precioMax.value);
-
-        if (!isNaN(min) && !isNaN(max)) {
-            filtroPrecio = producto => producto.cost >= min && producto.cost <= max;
-        } else if (!isNaN(min) || !isNaN(max)) {
-            filtroPrecio = producto => producto.cost >= min || producto.cost <= max;
-        } else {
-            filtroPrecio = null;
-        }
-
-        recalcular();
-    });
+    precioMin.addEventListener("input", TBD);
+    precioMax.addEventListener("input", TBD);
+    //document.getElementById("aplicarFiltroPrecio").addEventListener("click", TBD);
 
     document.getElementById("limpiarFiltroPrecio").addEventListener("click", function () {
         precioMin.value = "";
         precioMax.value = "";
+        busqueda.value = "";
 
+        filtroBusqueda = null;
         filtroPrecio = null;
         recalcular();
     });
