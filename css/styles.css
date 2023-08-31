@@ -195,7 +195,7 @@ a.custom-card:hover {
 }
 
 
-h1.titulo-productos {
+#tituloProducto {
   font-family: 'Oswald', sans-serif;
   text-align: center;
   font-size: 53px;
@@ -327,4 +327,8 @@ p.parrafo-productos {
 .container,
 .site-header {
     font-family: 'Oswald',sans-serif !important;
+}
+
+#search{
+  margin-left: 10px;
 }
