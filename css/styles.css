@@ -196,12 +196,12 @@ a.custom-card:hover {
 }
 
 
-h1.titulo-autos {
+#tituloProducto {
   font-family: 'Oswald', sans-serif;
   text-align: center;
   font-size: 53px;
 }
-p.parrafo-autos {
+p.parrafo-productos {
   text-align: center;
   font-size: 15px;
 }
@@ -313,4 +313,32 @@ p.parrafo-autos {
   height: 100%;
   
 }
+#menu > input {
+  width: 70%;
+  height: auto;
+  margin-left: 10px;
+}
 
+.Tamaño{
+  width: 25%;
+  height: 20%;
+  margin-right: 10px;
+}
+
+.Filtroprecio{
+  display: flex; 
+  align-items: center;
+
+}
+
+
+.jumbotron,
+.card-body,
+.container,
+.site-header {
+    font-family: 'Oswald',sans-serif !important;
+}
+
+#search{
+  margin-left: 10px;
+}
