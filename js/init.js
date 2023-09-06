@@ -14,10 +14,19 @@ if (userSession && userSession.mail) {
   userDisplay.textContent = `¡Hola ${userSession.mail}!`;
 }
 
+// Cerrar Sesión
 document.getElementById("logout").addEventListener("click", function() {
   localStorage.clear()
   location.href= "login.html"
 });
+
+// Obtener ID del producto
+const setProdID = (id) => {
+  localStorage.setItem("prodID", id);
+  window.location = "product-info.html";
+};
+
+// -------------------------------------
 
 let showSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "block";
