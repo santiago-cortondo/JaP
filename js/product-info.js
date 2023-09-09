@@ -1,29 +1,48 @@
 let comentarios = []
 const prodID = localStorage.getItem("prodID") 
-const urlInfoComentarios = PRODUCT_INFO_COMMENTS_URL + prodID + EXT_TYPE
+const URLComentarios = PRODUCT_INFO_COMMENTS_URL + prodID + EXT_TYPE
 
-
-// Función que recibe por parámetro un array y muestra sus elementos en pantalla
-// function showList(array) {
-//   const container = document.getElementById("list");
-//   container.innerHTML = "";
-
-//   array.forEach((element) => {
-//     const li = document.createElement("li");
-//     li.appendChild(document.createTextNode(element));
-//     container.appendChild(li);
-//   });
-// }
 
 // función para mostrar cada uno de los comentarios en product-info.html
 function mostrarComentarios() {
     contenidoHTML = ""
     comentarios.forEach((comentario) => {
-        // contenidoHTML += ...
-        // acá iría el html
+        contenidoHTML += `
+        <div class="card mb-3">
+            <div class="">
+                <p>${comentario.user} - ${comentario.dateTime}</p>
+                <div>${estrellas(comentario.score)}</div>
+                <p>${comentario.description}</p>
+            </div>
+        </div>`
     })
+
+    document.getElementById("comentarios").innerHTML = contenidoHTML;
+}
+
+
+// función para mostrar estrellas en los comentarios
+function estrellas(score) {
+    let estrella = ``
+    for (let i = 0; i < 5; i++) {
+        if (i < score) {
+            estrella += `<i class="fa fa-star checked"></i>`
+        } else {
+            estrella += `<i class="fa fa-star"></i>`
+        }
+    }
+
+    return estrella;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     
+    // obtener los comentarios del json
+    getJSONData(URLComentarios).then((result) => {
+        if (result.status === "ok") {
+            comentarios = result.data;
+            mostrarComentarios();
+        }
+    })
+
 })
