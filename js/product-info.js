@@ -1,4 +1,4 @@
- Entrega3Parte3
+// Entrega3Parte3
 let comentarios = []
 const prodID = localStorage.getItem("prodID") 
 const URLComentarios = PRODUCT_INFO_COMMENTS_URL + prodID + EXT_TYPE
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
 })
-=======
+
 function obtenerDatosDelProducto(productId) {
     let productInfoUrl = `https://japceibal.github.io/emercado-api/products/${productId}.json`;
 
@@ -102,4 +102,3 @@ document.addEventListener("DOMContentLoaded", function () {
         obtenerDatosDelProducto(productId);
     }
 });
- main
