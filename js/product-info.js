@@ -61,25 +61,31 @@ document.addEventListener("DOMContentLoaded", () => {
     getJSONData(URLComentarios).then((result) => {
         if (result.status === "ok") {
             comentarios = result.data;
-            mostrarComentarios();
+            //mostrarComentarios();
         }
+    }).then(()=>{
+        let comentariosGuardados = JSON.parse(localStorage.getItem("comentarios")) || [];
+        comentarios = comentarios.concat(comentariosGuardados.filter(e=>e.product==prodID));
+        mostrarComentarios();
     })
+
+  
     let boton = document.getElementById("comentar");
 
     boton.addEventListener("click", () => {
         let comentario = document.getElementById("texto").value
         let valorEstrella = document.getElementById("stars").value
         let tiempo = getTime();
-        let user = JSON.parse(localStorage.setItem("user"));
+        let user = JSON.parse(localStorage.getItem("user"));
         let comentarioData = {
             user: user.mail,
             description: comentario,
             score: valorEstrella,
-            dataTime: tiempo
+            dateTime: tiempo,
+            product: prodID
         };
 
         comentarios.push(comentarioData);
-
         let comentariosGuardados = JSON.parse(localStorage.getItem("comentarios")) || [];
         comentariosGuardados.push(comentarioData);
         localStorage.setItem("comentarios", JSON.stringify(comentariosGuardados));

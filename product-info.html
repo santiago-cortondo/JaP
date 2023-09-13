@@ -66,14 +66,16 @@
                     <textarea class="form-control" id="texto" placeholder="texto" rows="10" style="height:100%;"></textarea>
                     <label for="texto">Descripcion</label>
                 </div>
+                <div>
+                    <label for="puntos">Tu puntuación:</label>
+                </div>
+            
                 <div class="form-floating">
-                    <input type="range" class="rating" id="stars" min="1" max="5" placeholder="3" oninput="this.style.setProperty('--value', this.value)">
+                    <input type="range" class="rating" id="stars" min="1" max="5" placeholder="1" value="1" oninput="this.style.setProperty('--value', this.value)">
                     <!--<label for="stars">Rating</label>-->
                 </div>
                 <div class="form-floating">
                     <input type="button" value="Comentar" id="comentar" class="btn btn-primary">
-
-
                 </div>
             </form>
         </div>
