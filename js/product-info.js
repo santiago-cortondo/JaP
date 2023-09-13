@@ -143,7 +143,8 @@ function mostrarDatosDelProducto(productData) {
         let imageDiv = document.createElement("div");
         let imgElement = document.createElement("img");
 
-     
+        imageDiv.classList.add("col-md-3");
+
         imgElement.classList.add("img-thumbnail");
 
         imgElement.src = imageSrc;
