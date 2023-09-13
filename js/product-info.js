@@ -10,10 +10,16 @@ function mostrarComentarios() {
     comentarios.forEach((comentario) => {
         contenidoHTML += `
         <div class="card mb-3">
-            <div class="">
-                <p>${comentario.user} - ${comentario.dateTime}</p>
-                <div>${estrellas(comentario.score)}</div>
-                <p>${comentario.description}</p>
+            <div class="card-body">
+                <div class="d-flex flex-column">
+                    <div>
+                        <p><span class="text-primary">${comentario.user}</span> - ${comentario.dateTime}</p>
+                        <p class="flex-row">${estrellas(comentario.score)}</p>
+                    </div>
+                    <div>
+                        <p>${comentario.description}</p>
+                    </div>
+                </div>
             </div>
         </div>`
     })
