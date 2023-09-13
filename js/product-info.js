@@ -46,19 +46,10 @@ function pad(a) {
     return ("" + a).padStart(2, '0');
 }
 
-function getTime() {
+function getTime() {// formato: '2020-02-21 15:05:22'
     const now = new Date();
     return "" + now.getFullYear() + "-" + pad(now.getMonth()) + "-" + pad(now.getDate()) + " " +
         pad(now.getHours()) + ":" + pad(now.getMinutes()) + ":" + pad(now.getSeconds())
-    /*    2020-02-21 15:05:22
-
-    getFullYear() - Returns the 4-digit year
-    getMonth() - Returns a zero-based integer (0-11) representing the month of the year.
-    getDate() - Returns the day of the month (1-31).
-    getHours() - Returns the hour of the day (0-23).
-    getMinutes() - Returns the minute (0-59).
-    getSeconds() - Returns the second (0-59). 
-    */
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -67,15 +58,14 @@ document.addEventListener("DOMContentLoaded", () => {
     getJSONData(URLComentarios).then((result) => {
         if (result.status === "ok") {
             comentarios = result.data;
-            //mostrarComentarios();
         }
-    }).then(()=>{
+    }).then(() => {
         let comentariosGuardados = JSON.parse(localStorage.getItem("comentarios")) || [];
-        comentarios = comentarios.concat(comentariosGuardados.filter(e=>e.product==prodID));
+        comentarios = comentarios.concat(comentariosGuardados.filter(e => e.product == prodID));
         mostrarComentarios();
     })
 
-  
+
     let boton = document.getElementById("comentar");
 
     boton.addEventListener("click", () => {
@@ -90,13 +80,14 @@ document.addEventListener("DOMContentLoaded", () => {
             dateTime: tiempo,
             product: prodID
         };
-
+        //mostrar nuevo comentario
         comentarios.push(comentarioData);
+        
+        //guardar nuevo comentario para despues
         let comentariosGuardados = JSON.parse(localStorage.getItem("comentarios")) || [];
         comentariosGuardados.push(comentarioData);
         localStorage.setItem("comentarios", JSON.stringify(comentariosGuardados));
 
-        //alert("Nuevo comentario guardado con exito");
         Swal.fire(
             'Enviado!',
             'Nuevo comentario guardado con exito',
