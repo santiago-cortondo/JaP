@@ -1,6 +1,6 @@
 // Entrega3Parte3
 let comentarios = []
-const prodID = localStorage.getItem("prodID") 
+const prodID = localStorage.getItem("prodID")
 const URLComentarios = PRODUCT_INFO_COMMENTS_URL + prodID + EXT_TYPE
 
 
@@ -36,14 +36,64 @@ function estrellas(score) {
     return estrella;
 }
 
+function pad(a) {
+    return ("" + a).padStart(2, '0');
+}
+
+function getTime() {
+    const now = new Date();
+    return "" + now.getFullYear() + "-" + pad(now.getMonth()) + "-" + pad(now.getDate()) + " " +
+        pad(now.getHours()) + ":" + pad(now.getMinutes()) + ":" + pad(now.getSeconds())
+    /*    2020-02-21 15:05:22
+
+    getFullYear() - Returns the 4-digit year
+    getMonth() - Returns a zero-based integer (0-11) representing the month of the year.
+    getDate() - Returns the day of the month (1-31).
+    getHours() - Returns the hour of the day (0-23).
+    getMinutes() - Returns the minute (0-59).
+    getSeconds() - Returns the second (0-59). 
+    */
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    
+
     // obtener los comentarios del json
     getJSONData(URLComentarios).then((result) => {
         if (result.status === "ok") {
             comentarios = result.data;
             mostrarComentarios();
         }
+    })
+    let boton = document.getElementById("comentar");
+
+    boton.addEventListener("click", () => {
+        let comentario = document.getElementById("texto").value
+        let valorEstrella = document.getElementById("stars").value
+        let tiempo = getTime();
+        let user = JSON.parse(localStorage.setItem("user"));
+        let comentarioData = {
+            user: user.mail,
+            description: comentario,
+            score: valorEstrella,
+            dataTime: tiempo
+        };
+
+        comentarios.push(comentarioData);
+
+        let comentariosGuardados = JSON.parse(localStorage.getItem("comentarios")) || [];
+        comentariosGuardados.push(comentarioData);
+        localStorage.setItem("comentarios", JSON.stringify(comentariosGuardados));
+
+        //alert("Nuevo comentario guardado con exito");
+        Swal.fire(
+            'Enviado!',
+            'Nuevo comentario guardado con exito',
+            'success'
+        )
+
+        document.getElementById("texto").value = "";
+        document.getElementById("stars").value = "";
+        mostrarComentarios();
     })
 
 })
@@ -86,7 +136,7 @@ function mostrarDatosDelProducto(productData) {
     productCategory.textContent = `Categoría: ${productData.category}`;
     productSoldCount.textContent = `Vendidos: ${productData.soldCount}`;
 
-    productImages.innerHTML = ""; 
+    productImages.innerHTML = "";
 
     for (let imageSrc of productData.images) {
         let imgElement = document.createElement("img");
@@ -102,3 +152,5 @@ document.addEventListener("DOMContentLoaded", function () {
         obtenerDatosDelProducto(productId);
     }
 });
+
+
